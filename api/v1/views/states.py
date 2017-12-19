@@ -30,4 +30,16 @@ def DEL_state(state_id):
     #if keyword == 'DELETE':
         state.delete()
         storage.save()
-        return """empty dictionary""", 200
+        return #empty dictionary, 200
+
+@app.route('states/<int:state_id>', strict_slashes=False, methods=['POST'])
+def POST_state(state_id):
+    """POST State object adds state, raise 400 if not valid json"""
+
+    flask_to_dict = request.get_json
+    if not flask_to_dict:
+        return #...(Error: Not a JSON), 400
+    name = flask_to_dict.get('name', "")
+        return #...(Error: Missing name), 400
+
+    # must return new state...continued
