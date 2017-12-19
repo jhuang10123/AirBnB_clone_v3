@@ -43,3 +43,7 @@ def POST_state(state_id):
         return #...(Error: Missing name), 400
 
     # must return new state...continued
+
+    flask_to_dict.pop("id", None)
+    flask_to_dict.pop("created_at", None)
+    flask_to_dict.pop("updated_at", None)
