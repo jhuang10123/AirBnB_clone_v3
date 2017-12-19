@@ -14,6 +14,20 @@ def getAllStates():
     for item in all_obj.values():
         return jsonify(item.to_dict())
 
-# #Retrieves a State object: GET /api/v1/states/<state_id>
-# @app.route('/states/<int:state_id>', methods=['GET'])
-# #try except 404
+#Retrieves a State object: GET /api/v1/states/<state_id>
+@app.route('/states/<int:state_id>', strict_slashes=False, methods=['GET'])
+def GET_state(state_id):
+    """GET State object, else raise 404"""
+    try:
+        state = storage.get("State", state_id)
+    except:
+        raise(404)
+
+@app.route('states/<int:state_id>', strict_slashes=False, methods=['DELETE'])
+def DEL_state(state_id):
+    """DELETE State object, else raise 404, return status code 200"""
+
+    #if keyword == 'DELETE':
+        state.delete()
+        storage.save()
+        return """empty dictionary""", 200
