@@ -10,3 +10,4 @@ versions/
 file.json
 .gitignore
 test_params_create
+test_get_count.py
