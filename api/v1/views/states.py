@@ -12,7 +12,7 @@ def getAllStates():
     """Retrieves the list of all State objects"""
     all_obj = storage.all('State')
     for item in all_obj.values():
-        return item
+        return jsonify(item.to_dict())
 
 # #Retrieves a State object: GET /api/v1/states/<state_id>
 # @app.route('/states/<int:state_id>', methods=['GET'])
