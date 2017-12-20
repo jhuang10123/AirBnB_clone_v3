@@ -153,11 +153,46 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
+To check the status of your api, open 2 terminals
+First window:
+```
+ubuntu:~/Airbnb_clone_v3$ HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+...
+```
+
+Second window:
+```
+ubuntu:~/Airbnb_clone_v3$ curl -X GET http://0.0.0.0:5000/api/v1/status
+{
+  "status": "OK"
+}
+```
+
+To check whether a State(s) exists:
+```
+ubuntu:~/Airbnb_clone_v3$ curl -X GET http://0.0.0.0:5000/api/v1/states/
+{
+  "__class__": "State", 
+  "created_at": "2017-04-14T00:00:02", 
+  "id": "8f165686-c98d-46d9-87d9-d6059ade2d99", 
+  "name": "Louisiana", 
+  "updated_at": "2017-04-14T00:00:02"
+}
+...
+```
+If State(s) don't exist, it should return a 404 error
+
 
 ## Bugs
 No known bugs at this time. 
 
 ## Authors
+
+###### Version 3
+
+- Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/EarthToJHuang)
+- Joann Vuong - [Github](https://github.com/jvpupcat) / [Twitter](https://twitter.com/jv_pupcat)
 
 ###### Version 2
 
