@@ -15,37 +15,40 @@ def getAllStates():
         return jsonify(item.to_dict())
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET', 'DELETE'])
-def get_state():
-    if request.method == 'GET':
-        def GET_state(state_id):
-            """GET State object, else raise 404"""
-            #get all State objects
-            all_states = storage.all('State')
-            for item in all_states.values():
-                if state_id == item.id:
-                    return jsonify(item.to_dict())
-                    abort(404)
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
+def GET_state(state_id):
+    """GET State object, else raise 404"""
+    #get all State objects
+    all_states = storage.all('State')
 
-    elif request.method == 'DELETE':
-        state = storage.get('State', state_id)
-        if state is None:
-            abort(404)
-        state.delete()
-        state.save()
-        return jsonify({}), 200
+    #matching inputed state_id against all obj ids in State class
+    for item in all_states.values():
+        if state_id == item.id:
+            return jsonify(item.to_dict())
+    # if no match, return 404 error
+    abort(404)
+
+
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+def DEL_state(state_id):
+    state = storage.get('State', state_id)
+    if state is None:
+        abort(404)
+    state.delete()
+    state.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def POST_state():
     """adds state, raise 400 if not valid json"""
 
-# get user data
-# get_json method parses the incoming JSON request data and returns it as aPython dictionary.
+    # get user data
+    # get_json method parses the incoming JSON request data and returns it as a Python dictionary.
 
     post_content = request.get_json()
-# Post_content example:
-# {"name":"washington"}
+    # Post_content example:
+    # {"name":"washington"}
 
 
 #return error if not valid json format
@@ -58,9 +61,9 @@ def POST_state():
     if not name:
         abort(400, "Missing name")
 
-#create a new state with user content
+#create a new state with inputed user content
 #send in user input(key:value) to create new object
-    new_state = State(**post_content)
+    new_state = State(**post_content) #reference BaseModel
     storage.new(new_state)
 
 #save new object
