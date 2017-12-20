@@ -69,10 +69,8 @@ class FileStorage:
         """Deserialize JSON file to objects"""
         self.reload()
 
-
     def get(self, cls, id):
-        """retrives an object based on the class name and its ID"""
-        # retrieve all objects in the class
+        """retrieves an object based on the class name and its ID"""
         all_obj = self.all(cls)
         for item in all_obj.values():
             if item.id == id:
