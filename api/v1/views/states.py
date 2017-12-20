@@ -31,6 +31,7 @@ def GET_state(state_id):
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def DEL_state(state_id):
+    """ delete a state object """
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
@@ -70,4 +71,14 @@ def POST_state():
     new_state.save()
 
     return jsonify(new_state.to_dict()), 201
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def PUT_state():
+    """ """
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
+    content = request.get_json()
+    if not request.is_json:
+        abort(404, "Not a JSON")
 
