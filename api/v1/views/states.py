@@ -54,11 +54,9 @@ def POST_state():
     # Post_content example:
     # {"name":"washington"}
 
-
 # return error if not valid json format
     if not request.is_json:
         abort(400, "Not a JSON")
-
 
 # return error if user input doesnt include the key 'name'
     name = post_content.get('name')

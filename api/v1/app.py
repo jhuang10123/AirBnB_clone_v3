@@ -15,11 +15,13 @@ app.register_blueprint(app_views)
 def teardown_app(self):
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """custom page not found msg"""
     message = {"error": "Not found"}
     return jsonify(message), 404
+
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
