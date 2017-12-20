@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-
+New view for City objects that handles default Restful API actions
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -12,7 +12,7 @@ from models import storage
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def getAllCities(state_id):
-    """ """
+    """Retrieves list of all cities"""
     city_list = []
     all_cities = storage.all('City')
 
