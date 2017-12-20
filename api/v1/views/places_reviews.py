@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-
+New view for Review object that handles default Restful API actions
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -14,7 +14,7 @@ from models import storage
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def getAllReviews(place_id):
-    """ """
+    """Retrieves the list of all Review objects of a Place"""
     review_list = []
     all_reviews = storage.all('Review')
 
@@ -31,7 +31,7 @@ def getAllReviews(place_id):
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['GET'])
 def getReview(review_id):
-    """ return review object matching review_id """
+    """return review object matching review_id """
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
@@ -55,7 +55,7 @@ def DEL_review(review_id):
 @app_views.route('/places/<place_id>/reviews',
                  strict_slashes=False, methods=['POST'])
 def POST_review(place_id):
-    """ adds a review"""
+    """adds a review"""
     post_content = request.get_json()
 
     if not request.is_json:
@@ -87,7 +87,7 @@ def POST_review(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def PUT_review(review_id):
-    """ updates review object"""
+    """updates review object"""
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
