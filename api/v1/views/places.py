@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-
+New view for place objects that handles default Restful API actions
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -12,7 +12,7 @@ from models import storage
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def getAllPlaces(city_id):
-    """ """
+    """Retrieves all Place objects of City"""
     place_list = []
     all_places = storage.all('Place')
 
@@ -29,7 +29,7 @@ def getAllPlaces(city_id):
 
 @app_views.route('/places/<place_id>', strict_slashes=False, methods=['GET'])
 def getPlace(place_id):
-    """ return place object matching place_id """
+    """return place object matching place_id """
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
@@ -53,7 +53,7 @@ def DEL_place(place_id):
 @app_views.route('/cities/<city_id>/places',
                  strict_slashes=False, methods=['POST'])
 def POST_place(city_id):
-    """ adds a place"""
+    """adds a place"""
     post_content = request.get_json()
 
     if not request.is_json:
@@ -85,7 +85,7 @@ def POST_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def PUT_place(place_id):
-    """ updates place object"""
+    """updates place object"""
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
