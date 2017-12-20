@@ -68,7 +68,7 @@ def POST_user():
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def PUT_user(user_id):
-    """ """
+    """Update user, raise 404 if none, raise 400 if not json"""
     user = storage.get("User", user_id)
     if user is None:
         abort(404)
