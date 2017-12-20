@@ -74,3 +74,13 @@ class DBStorage:
         """Dispose of current session if active"""
         self.__session.remove()
 
+    def get(self, cls, id):
+        """retrives an object based on the class name and its ID"""
+        retval = None
+        all_obj = self.all(cls)
+        retval = all_obj.get("{}.{}".format(cls, id))
+        return retval
+
+    def count(self, cls=None):
+        """count the number of objects in storage"""
+        return len(self.all(cls))
