@@ -78,12 +78,6 @@ class FileStorage:
             if item.id == id:
                 return item
         return None
-#        return all_obj.get(cls + '.' + id, None)
- #        for item in all_obj:
-#             if item.id == id:
-#                 return item
-#         return None
-
 
     def count(self, cls=None):
         """count the number of objects in storage"""
