@@ -23,7 +23,7 @@ def GET_state(state_id):
 
     #matching inputed state_id against all obj ids in State class
     for item in all_states.values():
-        if state_id == item.id:
+        if item.id == state_id:
             return jsonify(item.to_dict())
     # if no match, return 404 error
     abort(404)
@@ -73,12 +73,27 @@ def POST_state():
     return jsonify(new_state.to_dict()), 201
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def PUT_state():
+def PUT_state(state_id):
     """ """
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
+    
+    ignore_keys = ["id", "created_at", "updated_at"]
+
+#get content to update
+# key:value
+# {"name":"California is cool"}
     content = request.get_json()
+
     if not request.is_json:
         abort(404, "Not a JSON")
+    
+    for key, val in content.items():
+        if key not in ignore_keys:
+            setattr(state, key, val)
+
+    state.save()
+
+    return jsonify(state.to_dict())
 
