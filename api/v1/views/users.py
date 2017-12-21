@@ -50,18 +50,13 @@ def POST_user():
     if not request.is_json:
         abort(400, "Not a JSON")
 
-    # name = post_content.get('name')
-    # if not name:
-    #     abort(400, "Missing name")
-
     email = post_content.get('email')
     if not email:
-        about(400,"Missing email")
+        about(400, "Missing email")
 
     password = post_content.get('password')
     if not password:
-        about(400,"Missing password")
-    email = post_content.get('email')
+        about(400, "Missing password")
 
     new_user = User(**post_content)
     storage.new(new_user)
@@ -92,4 +87,4 @@ def PUT_user(user_id):
     user.save()
     storage.close()
 
-    return jsonify(user.to_dict())
+    return jsonify(user.to_dict()), 200
