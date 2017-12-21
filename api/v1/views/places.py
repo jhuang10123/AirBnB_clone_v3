@@ -67,6 +67,10 @@ def POST_place(city_id):
     if not user_id:
         abort(400, "Missing user_id")
 
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
+
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
