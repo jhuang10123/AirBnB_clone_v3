@@ -83,5 +83,6 @@ def PUT_state(state_id):
             setattr(state, key, val)
 
     state.save()
+    storage.close()
 
     return jsonify(state.to_dict()), 200
