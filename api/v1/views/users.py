@@ -52,11 +52,11 @@ def POST_user():
 
     email = post_content.get('email')
     if not email:
-        about(400, "Missing email")
+        abort(400, "Missing email")
 
     password = post_content.get('password')
     if not password:
-        about(400, "Missing password")
+        abort(400, "Missing password")
 
     new_user = User(**post_content)
     storage.new(new_user)
