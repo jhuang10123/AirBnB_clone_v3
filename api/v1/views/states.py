@@ -11,11 +11,11 @@ from models import storage
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def getAllStates():
     """Retrieves the list of all State objects"""
-    retval = []
+    state_list = []
     all_states = storage.all('State')
     for item in all_states.values():
         retval.append(item.to_dict())
-    return jsonify(retval)
+    return jsonify(state_list)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
@@ -54,7 +54,6 @@ def POST_state():
     if not name:
         abort(400, "Missing name")
 
-# send in user input(key:value) to create new object
     new_state = State(**post_content)
     storage.new(new_state)
 
@@ -72,13 +71,12 @@ def PUT_state(state_id):
 
     ignore_keys = ["id", "created_at", "updated_at"]
 
-# get content to update
 # key:value
 # {"name":"California is cool"}
     content = request.get_json()
 
     if not request.is_json:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     for key, val in content.items():
         if key not in ignore_keys:
@@ -86,4 +84,4 @@ def PUT_state(state_id):
 
     state.save()
 
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 200

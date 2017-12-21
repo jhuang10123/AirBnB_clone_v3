@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/Usr/Bin/python3
 """
 
 """
@@ -8,7 +8,9 @@ from models.city import City
 from models.state import State
 from models import storage
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def getAllCities(state_id):
     """ """
     city_list = []
@@ -23,6 +25,7 @@ def getAllCities(state_id):
             city_list.append(item.to_dict())
 
     return jsonify(city_list)
+
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
 def getCity(city_id):
@@ -45,7 +48,8 @@ def DEL_city(city_id):
     storage.close()
     return jsonify({}), 200
 
-@app_views.route('/states/<state_id>/cities', 
+
+@app_views.route('/states/<state_id>/cities',
                  strict_slashes=False, methods=['POST'])
 def POST_city(state_id):
     """ adds a city"""
@@ -70,7 +74,9 @@ def POST_city(state_id):
     storage.close()
     return jsonify(new_city.to_dict()), 201
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+
+@app_views.route('/cities/<city_id>', methods=['PUT'],
+                 strict_slashes=False)
 def PUT_city(city_id):
     """ updates city object"""
     city = storage.get("City", city_id)
