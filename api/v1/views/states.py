@@ -28,13 +28,17 @@ def GET_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def DEL_state(state_id):
     """ delete a state object """
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    storage.delete(state)
+
+    state.delete()
+    storage.save()
+    storage.close()
     return jsonify({}), 200
 
 
@@ -50,13 +54,12 @@ def POST_state():
     if not name:
         abort(400, "Missing name")
 
-
 # send in user input(key:value) to create new object
     new_state = State(**post_content)
     storage.new(new_state)
 
     new_state.save()
-
+    storage.close()
     return jsonify(new_state.to_dict()), 201
 
 
