@@ -23,6 +23,4 @@ def stats():
     retval = {}
     for key, val in classes.items():
         retval[key] = storage.count(val)
-        print(key, retval[key])
     return jsonify(retval)
-
