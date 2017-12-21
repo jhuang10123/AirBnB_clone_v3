@@ -8,6 +8,7 @@ from models.city import City
 from models.state import State
 from models import storage
 
+
 @app_views.route('/states/<state_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def ALL_Amenities():
@@ -18,6 +19,7 @@ def ALL_Amenities():
         retval.append(amenities.to_dict())
     return jsonify(retval)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
 def GET_Amenity(amenity_id):
@@ -26,6 +28,7 @@ def GET_Amenity(amenity_id):
     if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
@@ -39,6 +42,7 @@ def DEL_Amenity(amenity_id):
     storage.save()
     storage.close()
     return jsonify({}), 200
+
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def POST_Amenity(amenity_id):
@@ -58,6 +62,7 @@ def POST_Amenity(amenity_id):
     new_amenity.save()
     storage.close()
     return jsonify(new_amenity.to_dict()), 201
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUTS'],
                  strict_slashes=False)
