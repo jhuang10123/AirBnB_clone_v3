@@ -24,13 +24,5 @@ def stats():
     for key, val in classes.items():
         retval[key] = storage.count(val)
         print(key, retval[key])
-    return retval
+    return jsonify(retval)
 
-
-# places 1
-# cities 2
-# users 2
-# amenities 0
-# states 2
-# reviews 1
-# TypeError: 'dict' object is not callable
