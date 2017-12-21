@@ -7,9 +7,10 @@ from flask import abort, jsonify, request
 from models.city import City
 from models.state import State
 from models import storage
+from models.amenity import Amenity
 
 
-@app_views.route('/states/<state_id>/amenities', methods=['GET'],
+@app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
 def ALL_Amenities():
     """Retrieves the list of all Amenity objects"""
@@ -45,7 +46,7 @@ def DEL_Amenity(amenity_id):
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-def POST_Amenity(amenity_id):
+def POST_Amenity():
     """Adds amenity, raise 400 upon error, returns 201 on success"""
     post_amenity = request.get_json()
 
@@ -64,7 +65,7 @@ def POST_Amenity(amenity_id):
     return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUTS'],
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
 def PUT_Amenity(amenity_id):
     """Update amenity, raise 404 on error, 200 on success"""
