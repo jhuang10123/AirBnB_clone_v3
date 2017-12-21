@@ -9,7 +9,7 @@ from models.city import City
 from models import storage
 
 
-@app_views.route('/citys/<city_id>/places', methods=['GET'],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def getAllPlaces(city_id):
     """ """
@@ -49,7 +49,7 @@ def DEL_place(place_id):
     return jsonify({}), 200
 
 
-@app_views.route('/citys/<city_id>/places',
+@app_views.route('/cities/<city_id>/places',
                  strict_slashes=False, methods=['POST'])
 def POST_place(city_id):
     """ adds a place"""
@@ -61,6 +61,10 @@ def POST_place(city_id):
     name = post_content.get('name')
     if not name:
         abort(400, "Missing name")
+
+    user_id = post_content.get('user_id')
+    if not user_id:
+        abort(400, "Missing user_id")
 
     city = storage.get("City", city_id)
     if city is None:
@@ -85,7 +89,8 @@ def PUT_place(place_id):
     if not request.is_json:
         abort(400, "Not a JSON")
 
-    ignore_keys = ["id", "city_id", "created_at", "updated_at"]
+    ignore_keys = ["id", "city_id", "user_id",
+                   "created_at", "updated_at"]
 
     for key, val in update_content.items():
         if key not in ignore_keys:
