@@ -60,9 +60,17 @@ def POST_review(place_id):
     if not request.is_json:
         abort(400, "Not a JSON")
 
-    name = post_content.get('name')
-    if not name:
-        abort(400, "Missing name")
+    user_id = post_content.get('user_id')
+    if not user_id:
+        abort(400, "Missing user_id")
+
+    text = post_content.get('text')
+    if not text:
+        abort(400, "Missing text")
+
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
 
     place = storage.get("Place", place_id)
     if place is None:
@@ -87,7 +95,7 @@ def PUT_review(review_id):
     if not request.is_json:
         abort(400, "Not a JSON")
 
-    ignore_keys = ["id", "state_id", "created_at", "updated_at"]
+    ignore_keys = ["id", "place_id", "user_id", "created_at", "updated_at"]
 
     for key, val in update_content.items():
         if key not in ignore_keys:
